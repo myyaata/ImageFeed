@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3200B2682FCB6D9D002B078B /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3200B2672FCB6D9D002B078B /* ImagesListViewController.swift */; };
+		3200B2952FD099EE002B078B /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3200B2942FD099E1002B078B /* ImagesListCell.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		3200B2772FCB6DA1002B078B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -25,8 +30,10 @@
 
 /* Begin PBXFileReference section */
 		3200B2602FCB6D9D002B078B /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3200B2672FCB6D9D002B078B /* ImagesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewController.swift; sourceTree = "<group>"; };
 		3200B2762FCB6DA1002B078B /* ImageFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3200B2802FCB6DA1002B078B /* ImageFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3200B2942FD099E1002B078B /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +95,7 @@
 		3200B2572FCB6D9D002B078B = {
 			isa = PBXGroup;
 			children = (
+				3200B2972FD09C22002B078B /* ImagesList */,
 				3200B2622FCB6D9D002B078B /* ImageFeed */,
 				3200B2792FCB6DA1002B078B /* ImageFeedTests */,
 				3200B2832FCB6DA1002B078B /* ImageFeedUITests */,
@@ -103,6 +111,15 @@
 				3200B2802FCB6DA1002B078B /* ImageFeedUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3200B2972FD09C22002B078B /* ImagesList */ = {
+			isa = PBXGroup;
+			children = (
+				3200B2942FD099E1002B078B /* ImagesListCell.swift */,
+				3200B2672FCB6D9D002B078B /* ImagesListViewController.swift */,
+			);
+			path = ImagesList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,6 +266,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3200B2682FCB6D9D002B078B /* ImagesListViewController.swift in Sources */,
+				3200B2952FD099EE002B078B /* ImagesListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +306,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XU8X46BFZT;
@@ -303,8 +323,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.ImageFeed;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.ImageFeed.silchenko;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -322,6 +343,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XU8X46BFZT;
@@ -338,8 +360,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.ImageFeed;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.ImageFeed.silchenko;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
