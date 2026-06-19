@@ -10,7 +10,6 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
-    
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var imageView: UIImageView!
     
