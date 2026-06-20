@@ -171,7 +171,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19n-GQ-jT1">
-                                <rect key="frame" x="312" y="831" width="50" height="50"/>
+                                <rect key="frame" x="190" y="831" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="quS-OQ-mam"/>
                                     <constraint firstAttribute="width" secondItem="19n-GQ-jT1" secondAttribute="height" multiplier="1:1" id="rCk-hb-xVK"/>
@@ -191,7 +191,7 @@
                             <constraint firstItem="Ojm-GL-LpD" firstAttribute="leading" secondItem="tW6-6R-Eka" secondAttribute="leading" id="5g0-Dc-6St"/>
                             <constraint firstItem="Ojm-GL-LpD" firstAttribute="bottom" secondItem="19n-GQ-jT1" secondAttribute="bottom" constant="17" id="Awa-Je-kVm"/>
                             <constraint firstItem="8A7-KV-we0" firstAttribute="leading" secondItem="Ojm-GL-LpD" secondAttribute="leading" id="FSD-m6-kpT"/>
-                            <constraint firstItem="Ojm-GL-LpD" firstAttribute="trailing" secondItem="19n-GQ-jT1" secondAttribute="trailing" constant="68" id="NL9-VA-H8K"/>
+                            <constraint firstItem="Ojm-GL-LpD" firstAttribute="centerX" secondItem="19n-GQ-jT1" secondAttribute="centerX" id="NL9-VA-H8K"/>
                             <constraint firstItem="tW6-6R-Eka" firstAttribute="trailing" secondItem="Ojm-GL-LpD" secondAttribute="trailing" id="O0k-e8-4Zy"/>
                             <constraint firstItem="8A7-KV-we0" firstAttribute="top" secondItem="w48-Ld-fEW" secondAttribute="topMargin" id="y0y-sJ-vcZ"/>
                         </constraints>
