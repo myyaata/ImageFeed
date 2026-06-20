@@ -62,7 +62,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(exitButton)
         NSLayoutConstraint.activate([
             exitButton.heightAnchor.constraint(equalToConstant: 44),
-            exitButton.heightAnchor.constraint(equalToConstant: 44),
+            exitButton.widthAnchor.constraint(equalToConstant: 44),
             exitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             exitButton.centerYAnchor.constraint(equalTo: profilePick.centerYAnchor)
         ])

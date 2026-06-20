@@ -51,7 +51,7 @@ final class SingleImageViewController: UIViewController {
         rescaleAndCenterImageInScrollView(image: image)
     }
     
-    @IBAction func didTabBackwardButton(_ sender: Any) {
+    @IBAction func didTapBackwardButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     

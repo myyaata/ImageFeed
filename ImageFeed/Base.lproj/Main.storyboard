@@ -167,7 +167,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="backward_button"/>
                                 <connections>
-                                    <action selector="didTabBackwardButton:" destination="DQM-lU-jv5" eventType="touchUpInside" id="5BT-J8-vOF"/>
+                                    <action selector="didTapBackwardButton:" destination="DQM-lU-jv5" eventType="touchUpInside" id="qjt-RD-4bP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19n-GQ-jT1">
