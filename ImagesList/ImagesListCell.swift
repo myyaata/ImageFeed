@@ -14,6 +14,7 @@ final class ImagesListCell: UITableViewCell {
         
     override func awakeFromNib() {
         super.awakeFromNib()
+        selectionStyle = .none
 
         gradientLayer.colors = [
             UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 0.0).cgColor,
