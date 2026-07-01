@@ -9,6 +9,10 @@ enum NetworkError: Error {
 }
 
 extension URLSession {
+    private enum HTTPStatusCode {
+        static let successRange = 200..<300
+    }
+    
     func data(
         for request: URLRequest,
         completion: @escaping (Result<Data, Error>) -> Void
@@ -21,7 +25,7 @@ extension URLSession {
         
         let task = dataTask(with: request, completionHandler: { data, response, error in
             if let data = data, let response = response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                if 200 ..< 300 ~= statusCode {
+                if HTTPStatusCode.successRange.contains(statusCode) {
                     fulfillCompletionOnTheMainThread(.success(data))
                 } else {
                     print("HTTP статус: \(statusCode)")

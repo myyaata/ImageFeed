@@ -2,6 +2,7 @@ import UIKit
 
 final class SplashViewController: UIViewController {
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
+    private let tabBarControllerIdentifier = "TabBarViewController"
     private let storage = OAuth2TokenStorage()
 
     override func viewDidAppear(_ animated: Bool) {
@@ -33,7 +34,7 @@ final class SplashViewController: UIViewController {
         }
 
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: "TabBarViewController")
+            .instantiateViewController(withIdentifier: tabBarControllerIdentifier)
         window.rootViewController = tabBarController
     }
 }
