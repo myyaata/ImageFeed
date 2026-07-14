@@ -41,9 +41,10 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         vc.dismiss(animated: true)
-        ProgressHUD.animate()
-        oauth2Service.fetchOAuthToken(code: code) { result in
-            ProgressHUD.dismiss()
+        UIBlockingProgressHUD.show()
+        oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            guard let self else { return }
             switch result {
             case .success(let token):
                 print("✅ Токен получен: \(token)")
@@ -58,5 +59,12 @@ extension AuthViewController: WebViewViewControllerDelegate {
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         vc.dismiss(animated: true)
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == showWebViewSegueIdentifier {
+            return !UIBlockingProgressHUD.isShowing
+        }
+        return super.shouldPerformSegue(withIdentifier: identifier, sender: sender)
     }
 }

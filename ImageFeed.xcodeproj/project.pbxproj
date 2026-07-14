@@ -20,6 +20,7 @@
 		32199F352FF441490034918F /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32199F342FF441360034918F /* OAuth2TokenStorage.swift */; };
 		32199F382FF469050034918F /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32199F372FF468FE0034918F /* SplashViewController.swift */; };
 		32199F51300415AD0034918F /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 32199F50300415AD0034918F /* ProgressHUD */; };
+		32199F54300682170034918F /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32199F53300680C90034918F /* UIBlockingProgressHUD.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		32199F312FF43D320034918F /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
 		32199F342FF441360034918F /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 		32199F372FF468FE0034918F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		32199F53300680C90034918F /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -118,6 +120,7 @@
 		3200B2572FCB6D9D002B078B = {
 			isa = PBXGroup;
 			children = (
+				32199F52300680BB0034918F /* Views */,
 				32199F362FF468F60034918F /* SplashViewController */,
 				32199F302FF43D260034918F /* Models */,
 				32199F2E2FF438470034918F /* Helpers */,
@@ -209,6 +212,14 @@
 				32199F372FF468FE0034918F /* SplashViewController.swift */,
 			);
 			path = SplashViewController;
+			sourceTree = "<group>";
+		};
+		32199F52300680BB0034918F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				32199F53300680C90034918F /* UIBlockingProgressHUD.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,6 +378,7 @@
 				3200B2952FD099EE002B078B /* ImagesListCell.swift in Sources */,
 				32199F332FF43F7C0034918F /* URLSession+data.swift in Sources */,
 				32199EDD2FEC2FC60034918F /* WebViewViewController.swift in Sources */,
+				32199F54300682170034918F /* UIBlockingProgressHUD.swift in Sources */,
 				32199F2D2FF2C70A0034918F /* OAuth2Service.swift in Sources */,
 				32199F352FF441490034918F /* OAuth2TokenStorage.swift in Sources */,
 				3200B2EE2FD613EA002B078B /* SingleImageViewController.swift in Sources */,
