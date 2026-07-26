@@ -30,11 +30,29 @@ final class AuthViewController: UIViewController {
         }
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == showWebViewSegueIdentifier {
+            return !UIBlockingProgressHUD.isShowing
+        }
+        return super.shouldPerformSegue(withIdentifier: identifier, sender: sender)
+    }
+    
     private func configureBackButton() {
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "backward_button")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "backward_button")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor(named: "ypBlack")
+    }
+    
+    private func showAuthErrorAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так",
+            message: "Не удалось войти в систему",
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: "Ок", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }
 
@@ -50,21 +68,13 @@ extension AuthViewController: WebViewViewControllerDelegate {
                 print("✅ Токен получен: \(token)")
                 self.delegate?.didAuthenticate(self)
             case .failure(let error):
-                print("❌ Ошибка: \(error)")
-                // TODO: Обработайте ошибку авторизации
-                break
+                print("[AuthViewController.webViewViewController]: \(error)")
+                self.showAuthErrorAlert()
             }
         }
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         vc.dismiss(animated: true)
-    }
-    
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == showWebViewSegueIdentifier {
-            return !UIBlockingProgressHUD.isShowing
-        }
-        return super.shouldPerformSegue(withIdentifier: identifier, sender: sender)
     }
 }
