@@ -1,7 +1,7 @@
 struct UserResult: Codable {
     let profileImage: ProfileImage
     
-    struct ProfileImage {
+    struct ProfileImage: Codable {
         let small: String
     }
     
