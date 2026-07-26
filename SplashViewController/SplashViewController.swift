@@ -4,21 +4,22 @@ final class SplashViewController: UIViewController {
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let tabBarControllerIdentifier = "TabBarViewController"
     private let storage = OAuth2TokenStorage()
-
+    private let profileService = ProfileService.shared
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if storage.token != nil {
-            switchToTabBarController()
+        if let token = storage.token {
+            fetchProfile(token: token)
         } else {
             performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
         }
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
     }
-
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
@@ -32,10 +33,26 @@ final class SplashViewController: UIViewController {
             assertionFailure("Invalid window configuration")
             return
         }
-
+        
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: tabBarControllerIdentifier)
         window.rootViewController = tabBarController
+    }
+    
+    private func fetchProfile(token: String) {
+        UIBlockingProgressHUD.show()
+        profileService.fetchProfile(token) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            guard let self else { return }
+            switch result {
+            case .success(let profile):
+                ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { _ in }
+                self.switchToTabBarController()
+            case .failure(let error):
+                print("❌ Ошибка загрузки профиля: \(error)")
+                break
+            }
+        }
     }
 }
 
@@ -60,8 +77,8 @@ extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
-        vc.dismiss(animated: true) { [weak self] in
-            self?.switchToTabBarController()
-        }
+        vc.dismiss(animated: true)
+        guard let token = storage.token else { return }
+        fetchProfile(token: token)
     }
 }
