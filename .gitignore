@@ -98,4 +98,5 @@ iOSInjectionProject/
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# End of https://www.toptal.com/developers/gitignore/api/swift,xcode
+# End of https://www.toptal.com/developers/gitignore/api/swift,xcodeImageFeed.xcodeproj/project.xcworkspace/xcshareddata/
+ImageFeed.xcodeproj/xcshareddata/

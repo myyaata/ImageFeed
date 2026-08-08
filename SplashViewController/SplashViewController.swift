@@ -1,26 +1,54 @@
 import UIKit
 
 final class SplashViewController: UIViewController {
-    private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let tabBarControllerIdentifier = "TabBarViewController"
     private let storage = OAuth2TokenStorage()
-
+    private let profileService = ProfileService.shared
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if storage.token != nil {
-            switchToTabBarController()
+        if let token = storage.token {
+            fetchProfile(token: token)
         } else {
-            performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
+            let viewController = UIStoryboard(
+                name: "Main",
+                bundle: .main
+            ).instantiateViewController(
+                withIdentifier: "AuthViewController"
+            ) as! AuthViewController
+            viewController.delegate = self
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true)
         }
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
     }
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLayout()
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
+    }
+    
+    private func setupLayout() {
+        view.backgroundColor = .ypBlack
+        guard let image = UIImage(named: "Vector") else {
+            print("Лого SplashScreen не найдено")
+            return }
+        let imageView = UIImageView(image: image)
+        view.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
     }
     
     private func switchToTabBarController() {
@@ -32,36 +60,33 @@ final class SplashViewController: UIViewController {
             assertionFailure("Invalid window configuration")
             return
         }
-
+        
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: tabBarControllerIdentifier)
         window.rootViewController = tabBarController
     }
-}
-
-extension SplashViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthenticationScreenSegueIdentifier {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers.first as? AuthViewController
-            else {
-                assertionFailure("Failed to prepare for \(showAuthenticationScreenSegueIdentifier)")
-                return
+    
+    private func fetchProfile(token: String) {
+        UIBlockingProgressHUD.show()
+        profileService.fetchProfile(token) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            guard let self else { return }
+            switch result {
+            case .success(let profile):
+                ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { _ in }
+                self.switchToTabBarController()
+            case .failure(let error):
+                print("[SplashViewController.fetchProfile]: \(error)")
+                break
             }
-            viewController.delegate = self
-            navigationController.modalPresentationStyle = .fullScreen
-            navigationController.isModalInPresentation = true
-        } else {
-            super.prepare(for: segue, sender: sender)
         }
     }
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
-        vc.dismiss(animated: true) { [weak self] in
-            self?.switchToTabBarController()
-        }
+        vc.dismiss(animated: true)
+        guard let token = storage.token else { return }
+        fetchProfile(token: token)
     }
 }

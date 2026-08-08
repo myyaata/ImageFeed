@@ -1,14 +1,24 @@
 import Foundation
+
+enum AuthServiceError: Error {
+    case invalidRequest
+}
+
 final class OAuth2Service {
     static let shared = OAuth2Service()
-
+    
     private init() {}
+    
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
     
     private let tokenStorage = OAuth2TokenStorage()
     
     private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard var urlComponents = URLComponents(string: "https://unsplash.com/oauth/token") else {
-            print("❌ Ошибка создания URLComponents")
+            print("[OAuth2Service.makeOAuthTokenRequest]: URLComponentsError - не удалось создать URLComponents")
+            assertionFailure("Failed to create URL")
             return nil
         }
         
@@ -21,7 +31,7 @@ final class OAuth2Service {
         ]
         
         guard let authTokenUrl = urlComponents.url else {
-            print("❌ Ошибка получения URL из URLComponents")
+            print("[OAuth2Service.makeOAuthTokenRequest]: URLError - не удалось получить URL из URLComponents")
             return nil
         }
         
@@ -31,30 +41,36 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let request = makeOAuthTokenRequest(code: code) else {
-            print("❌ Ошибка создания URLRequest")
-            completion(.failure(NetworkError.invalidRequest))
+        assert(Thread.isMainThread)
+        guard lastCode != code else {
+            print("[OAuth2Service.fetchOAuthToken]: AuthServiceError.invalidRequest - повторный запрос с тем же code: \(code)")
+            completion(.failure(AuthServiceError.invalidRequest))
             return
         }
-        let task = URLSession.shared.data(for: request) { result in
+        task?.cancel()
+        lastCode = code
+        guard let request = makeOAuthTokenRequest(code: code) else {
+            print("[OAuth2Service.fetchOAuthToken]: AuthServiceError.invalidRequest - не удалось создать URLRequest, code: \(code)")
+            lastCode = nil
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             switch result {
-            case .success(let data):
-                do {
-                    let decoder = JSONDecoder()
-                    let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    self.tokenStorage.token = response.accessToken
-                    completion(.success(response.accessToken))
-                }
-                catch {
-                    print("❌ Ошибка декодирования: \(error)")
-                    completion(.failure(NetworkError.decodingError(error)))
-                }
+            case .success(let response):
+                self?.tokenStorage.token = response.accessToken
+                completion(.success(response.accessToken))
             case .failure(let error):
-                print("❌ Ошибка сети: \(error)")
+                print("[OAuth2Service.fetchOAuthToken]: \(error) - code: \(code)")
                 completion(.failure(error))
             }
+            if self?.lastCode == code {
+                self?.task = nil
+                self?.lastCode = nil
+            }
         }
+        self.task = task
         task.resume()
- 
+        
     }
 }
