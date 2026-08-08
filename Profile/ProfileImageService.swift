@@ -67,11 +67,14 @@ final class ProfileImageService {
                 print("[ProfileImageService.fetchProfileImageURL]: \(error) - username: \(username)")
                 completion(.failure(error))
             }
-            self?.task = nil
-            self?.lastUsername = nil
+            if self?.lastUsername == username {
+                self?.task = nil
+                self?.lastUsername = nil
+            }
         }
         
         self.task = task
         task.resume()
     }
 }
+

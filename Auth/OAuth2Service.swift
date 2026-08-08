@@ -64,8 +64,10 @@ final class OAuth2Service {
                 print("[OAuth2Service.fetchOAuthToken]: \(error) - code: \(code)")
                 completion(.failure(error))
             }
-            self?.task = nil
-            self?.lastCode = nil
+            if self?.lastCode == code {
+                self?.task = nil
+                self?.lastCode = nil
+            }
         }
         self.task = task
         task.resume()

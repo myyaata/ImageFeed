@@ -52,8 +52,10 @@ final class ProfileService {
                 print("[ProfileService.fetchProfile]: \(error)")
                 completion(.failure(error))
             }
-            self?.task = nil
-            self?.lastToken = nil
+            if self?.lastToken == token {
+                self?.task = nil
+                self?.lastToken = nil
+            }
         }
         
         self.task = task
