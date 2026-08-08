@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
@@ -39,7 +40,24 @@ final class ProfileViewController: UIViewController {
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
-        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        profileImageView.kf.indicatorType = .activity
+        profileImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "userpick_example"),
+            options: [
+                .processor(processor),
+                .transition(.fade(0.2)),
+                .cacheOriginalImage
+            ]
+        ) { result in
+            switch result {
+            case .success(let value):
+                print("Аватар успешно загружен: \(value.source.url?.absoluteString ?? "")")
+            case .failure(let error):
+                print("Ошибка загрузки аватара: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func setupLayout() {
@@ -51,6 +69,9 @@ final class ProfileViewController: UIViewController {
         }
         view.addSubview(profileImageView)
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.clipsToBounds = true
+        profileImageView.layer.cornerRadius = 35
         NSLayoutConstraint.activate([
             profileImageView.heightAnchor.constraint(equalToConstant: 70),
             profileImageView.widthAnchor.constraint(equalToConstant: 70),
@@ -117,7 +138,7 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func didTapButton() {
-        //TODO
+        OAuth2TokenStorage().token = nil
         print("нажата кнопка exit")
     }
 }

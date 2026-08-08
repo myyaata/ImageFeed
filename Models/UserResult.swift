@@ -2,7 +2,7 @@ struct UserResult: Codable {
     let profileImage: ProfileImage
     
     struct ProfileImage: Codable {
-        let small: String
+        let large: String
     }
     
     enum CodingKeys: String, CodingKey {

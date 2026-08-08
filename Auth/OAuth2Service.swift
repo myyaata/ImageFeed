@@ -58,8 +58,8 @@ final class OAuth2Service {
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             switch result {
             case .success(let response):
-                    self?.tokenStorage.token = response.accessToken
-                    completion(.success(response.accessToken))
+                self?.tokenStorage.token = response.accessToken
+                completion(.success(response.accessToken))
             case .failure(let error):
                 print("[OAuth2Service.fetchOAuthToken]: \(error) - code: \(code)")
                 completion(.failure(error))
@@ -69,6 +69,6 @@ final class OAuth2Service {
         }
         self.task = task
         task.resume()
- 
+        
     }
 }

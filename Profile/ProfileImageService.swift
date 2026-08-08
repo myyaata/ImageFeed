@@ -55,7 +55,7 @@ final class ProfileImageService {
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
             switch result {
             case .success(let userResult):
-                let avatarURL = userResult.profileImage.small
+                let avatarURL = userResult.profileImage.large
                 self?.avatarURL = avatarURL
                 completion(.success(avatarURL))
                 
