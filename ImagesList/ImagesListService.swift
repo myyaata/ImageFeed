@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum ImagesListServiceError: Error {
+    case invalidRequest
+}
+
 final class ImagesListService {
     static let shared = ImagesListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
@@ -33,6 +37,16 @@ final class ImagesListService {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return request
+    }
+    
+    private func makeLikeRequest(photoId: String, isLike: Bool, token: String) -> URLRequest? {
+        guard let url = URL(string: "https://api.unsplash.com/photos/\(photoId)/like") else {
+            print("[ImagesListService.makeLikeRequest]: URLError - не удалось создать URLComponents")
+            return nil }
+        var request = URLRequest(url: url)
+        request.httpMethod = isLike ? "POST" : "DELETE"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }
@@ -74,6 +88,44 @@ final class ImagesListService {
         
         self.task = task
         task.resume()
+    }
+    
+    func changeLike(photoId: String, isLike: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
+        assert(Thread.isMainThread)
+        guard let token = OAuth2TokenStorage().token else {
+            print("[ImagesListService.changeLike]: ImagesListServiceError.invalidRequest - токен отсутствует")
+            completion(.failure(ImagesListServiceError.invalidRequest))
+            return
+        }
         
+        guard let request = makeLikeRequest(photoId: photoId, isLike: isLike, token: token) else {
+            print("[ImagesListService.changeLike]: ImagesListServiceError.invalidRequest - не удалось создать URLRequest, photoId: \(photoId)")
+            completion(.failure(ImagesListServiceError.invalidRequest))
+            return
+        }
+        
+        let task = urlSession.data(for: request) { [weak self] (result: Result<Data, Error>) in
+            guard let self else { return }
+            switch result {
+            case .success:
+                if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                    let photo = self.photos[index]
+                    let newPhoto = Photo(
+                        id: photo.id,
+                        size: photo.size,
+                        createdAt: photo.createdAt,
+                        welcomeDescription: photo.welcomeDescription,
+                        thumbImageURL: photo.thumbImageURL,
+                        largeImageURL: photo.largeImageURL,
+                        isLiked: !photo.isLiked)
+                    self.photos[index] = newPhoto
+                }
+                completion(.success(()))
+            case .failure(let error):
+                print("[ImagesListService.changeLike]: \(error) - photoId: \(photoId)")
+                completion(.failure(error))
+            }
+        }
+        task.resume()
     }
 }

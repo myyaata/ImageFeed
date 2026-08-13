@@ -22,7 +22,7 @@ extension Photo {
         self.id = result.id
         self.size = CGSize(width: result.width, height: result.height)
         self.welcomeDescription = result.description
-        self.thumbImageURL = result.urls.thumb
+        self.thumbImageURL = result.urls.regular
         self.largeImageURL = result.urls.full
         self.isLiked = result.isLiked
         let isoFormatter = ISO8601DateFormatter()
