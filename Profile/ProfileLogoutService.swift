@@ -15,6 +15,7 @@ final class ProfileLogoutService {
     
     func logout() {
         cleanCookies()
+        OAuth2TokenStorage().token = nil
         ProfileService.shared.reset()
         ProfileImageService.shared.reset()
         ImagesListService.shared.reset()
