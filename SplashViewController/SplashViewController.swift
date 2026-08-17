@@ -10,15 +10,15 @@ final class SplashViewController: UIViewController {
         if let token = storage.token {
             fetchProfile(token: token)
         } else {
-            let viewController = UIStoryboard(
+            guard let viewController = UIStoryboard(
                 name: "Main",
                 bundle: .main
             ).instantiateViewController(
                 withIdentifier: "AuthViewController"
-            ) as! AuthViewController
-            viewController.delegate = self
-            viewController.modalPresentationStyle = .fullScreen
-            present(viewController, animated: true)
+            ) as? AuthViewController else {
+                assertionFailure("[SplashViewController.viewDidAppear]: TypeCastingError - не удалось привести к AuthViewController")
+                return
+            }
         }
     }
     

@@ -18,6 +18,8 @@ struct Photo {
 }
 
 extension Photo {
+    private static let isoFormatter = ISO8601DateFormatter()
+
     init(result: PhotoResult) {
         self.id = result.id
         self.size = CGSize(width: result.width, height: result.height)
@@ -25,7 +27,6 @@ extension Photo {
         self.thumbImageURL = result.urls.regular
         self.largeImageURL = result.urls.full
         self.isLiked = result.isLiked
-        let isoFormatter = ISO8601DateFormatter()
-        self.createdAt = isoFormatter.date(from: result.createdAt)
+        self.createdAt = Photo.isoFormatter.date(from: result.createdAt)
     }
 }
