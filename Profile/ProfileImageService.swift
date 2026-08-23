@@ -8,7 +8,7 @@ enum ProfileImageServiceError: Error {
 final class ProfileImageService {
     static let shared = ProfileImageService()
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
-
+    
     private init() {}
     
     private let urlSession = URLSession.shared
@@ -75,6 +75,13 @@ final class ProfileImageService {
         
         self.task = task
         task.resume()
+    }
+    
+    func reset() {
+        task?.cancel()
+        task = nil
+        lastUsername = nil
+        avatarURL = nil
     }
 }
 
