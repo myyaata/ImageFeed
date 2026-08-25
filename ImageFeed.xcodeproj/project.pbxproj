@@ -25,6 +25,10 @@
 		32199F5A300693F90034918F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32199F59300693F50034918F /* Profile.swift */; };
 		32199F5C300694FC0034918F /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32199F5B300694F50034918F /* ProfileResult.swift */; };
 		3242A143302E7B4C00677B1F /* ProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3242A142302E7B3F00677B1F /* ProfileLogoutService.swift */; };
+		3242A18A303C8A7E00677B1F /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3242A189303C8A7800677B1F /* WebViewPresenter.swift */; };
+		3242A18C303C94B700677B1F /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3242A18B303C94B100677B1F /* AuthHelper.swift */; };
+		3242A196303D84F100677B1F /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3242A195303D84E300677B1F /* ProfilePresenter.swift */; };
+		3242A1B5303DA33100677B1F /* ImagesListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3242A1B4303DA32900677B1F /* ImagesListPresenter.swift */; };
 		32748172300AADAF00414CEB /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32748171300AADA600414CEB /* ProfileImageService.swift */; };
 		32748174300AADD000414CEB /* UserResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32748173300AADCC00414CEB /* UserResult.swift */; };
 		32C1ABD53026350A00EADAA2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 32C1ABD43026350A00EADAA2 /* Kingfisher */; };
@@ -73,6 +77,10 @@
 		32199F59300693F50034918F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		32199F5B300694F50034918F /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
 		3242A142302E7B3F00677B1F /* ProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutService.swift; sourceTree = "<group>"; };
+		3242A189303C8A7800677B1F /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
+		3242A18B303C94B100677B1F /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
+		3242A195303D84E300677B1F /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		3242A1B4303DA32900677B1F /* ImagesListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListPresenter.swift; sourceTree = "<group>"; };
 		32748171300AADA600414CEB /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		32748173300AADCC00414CEB /* UserResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResult.swift; sourceTree = "<group>"; };
 		32C1ABDA30274E2800EADAA2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -174,6 +182,7 @@
 		3200B2972FD09C22002B078B /* ImagesList */ = {
 			isa = PBXGroup;
 			children = (
+				3242A1B4303DA32900677B1F /* ImagesListPresenter.swift */,
 				32C1ABDC3028A14500EADAA2 /* ImagesListService.swift */,
 				3200B2942FD099E1002B078B /* ImagesListCell.swift */,
 				3200B2672FCB6D9D002B078B /* ImagesListViewController.swift */,
@@ -184,6 +193,7 @@
 		3200B2D72FD5C9AC002B078B /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				3242A195303D84E300677B1F /* ProfilePresenter.swift */,
 				3242A142302E7B3F00677B1F /* ProfileLogoutService.swift */,
 				32748171300AADA600414CEB /* ProfileImageService.swift */,
 				32199F5730068FC00034918F /* ProfileService.swift */,
@@ -203,6 +213,8 @@
 		32199EDA2FEC2FAF0034918F /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				3242A18B303C94B100677B1F /* AuthHelper.swift */,
+				3242A189303C8A7800677B1F /* WebViewPresenter.swift */,
 				32199F342FF441360034918F /* OAuth2TokenStorage.swift */,
 				32199F2C2FF2C6F70034918F /* OAuth2Service.swift */,
 				32199EDC2FEC2FBD0034918F /* WebViewViewController.swift */,
@@ -416,6 +428,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3242A18A303C8A7E00677B1F /* WebViewPresenter.swift in Sources */,
+				3242A18C303C94B700677B1F /* AuthHelper.swift in Sources */,
 				32C1ABE130291C9600EADAA2 /* Photo.swift in Sources */,
 				32199F5A300693F90034918F /* Profile.swift in Sources */,
 				3200B2682FCB6D9D002B078B /* ImagesListViewController.swift in Sources */,
@@ -431,7 +445,9 @@
 				32748172300AADAF00414CEB /* ProfileImageService.swift in Sources */,
 				32199F332FF43F7C0034918F /* URLSession+data.swift in Sources */,
 				32748174300AADD000414CEB /* UserResult.swift in Sources */,
+				3242A196303D84F100677B1F /* ProfilePresenter.swift in Sources */,
 				32199EDD2FEC2FC60034918F /* WebViewViewController.swift in Sources */,
+				3242A1B5303DA33100677B1F /* ImagesListPresenter.swift in Sources */,
 				32199F54300682170034918F /* UIBlockingProgressHUD.swift in Sources */,
 				32199F2D2FF2C70A0034918F /* OAuth2Service.swift in Sources */,
 				32199F352FF441490034918F /* OAuth2TokenStorage.swift in Sources */,
@@ -674,7 +690,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XU8X46BFZT;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.ImageFeedTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -696,7 +712,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XU8X46BFZT;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.ImageFeedTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
