@@ -19,6 +19,9 @@ final class SplashViewController: UIViewController {
                 assertionFailure("[SplashViewController.viewDidAppear]: TypeCastingError - не удалось привести к AuthViewController")
                 return
             }
+            viewController.delegate = self
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true)
         }
     }
     

@@ -78,8 +78,7 @@ extension ImagesListViewController {
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         cell.dateLabel.text = presenter.dateString(for: photo)
-        let likeImage = photo.isLiked ? UIImage(named: "active_like") : UIImage(named: "unactive_like")
-        cell.likeButton.setImage(likeImage, for: .normal)
+        cell.setIsLiked(photo.isLiked)
     }
 }
 

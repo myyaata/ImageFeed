@@ -107,6 +107,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
             target: self,
             action: #selector(Self.didTapButton)
         )
+        exitButton.accessibilityIdentifier = "logout button"
         exitButton.tintColor = .ypRedIOS
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitButton)
