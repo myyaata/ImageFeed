@@ -11,7 +11,13 @@ enum ImagesListServiceError: Error {
     case invalidRequest
 }
 
-final class ImagesListService {
+protocol ImagesListServiceProtocol: AnyObject {
+    var photos: [Photo] { get }
+    func fetchPhotosNextPage()
+    func changeLike(photoId: String, isLike: Bool, completion: @escaping (Result<Void, Error>) -> Void)
+}
+
+final class ImagesListService: ImagesListServiceProtocol {
     static let shared = ImagesListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     

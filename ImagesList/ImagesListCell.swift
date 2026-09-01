@@ -18,6 +18,7 @@ final class ImagesListCell: UITableViewCell {
     func setIsLiked(_ isLiked: Bool) {
         let likeImage = isLiked ? UIImage(named: "active_like") : UIImage(named: "unactive_like")
         likeButton.setImage(likeImage, for: .normal)
+        likeButton.accessibilityIdentifier = isLiked ? "like button on" : "like button off"
     }
     
     @IBAction func likeButtonClicked(_ sender: Any) {
@@ -32,7 +33,7 @@ final class ImagesListCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
-        
+        likeButton.accessibilityIdentifier = "like button off" 
         gradientLayer.colors = [
             UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 0.0).cgColor,
             UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 0.5393).cgColor

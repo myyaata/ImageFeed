@@ -4,8 +4,12 @@ enum ProfileImageServiceError: Error {
     case invalidRequest
 }
 
+protocol ProfileImageServiceProtocol: AnyObject {
+    var avatarURL: String? { get }
+}
 
-final class ProfileImageService {
+
+final class ProfileImageService: ProfileImageServiceProtocol {
     static let shared = ProfileImageService()
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     

@@ -1,45 +1,33 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func updateProfileDetails(name: String, loginName: String, description: String)
+    func updateAvatar(url: URL)
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
     
-    private let profileService = ProfileService.shared
-        
+    var presenter: ProfilePresenterProtocol?
+    
     private let profileImageView = UIImageView()
     private let nameLabel = UILabel()
     private let loginNameLabel = UILabel()
     private let descriptionLabel = UILabel()
-    
-    private var profileImageServiceObserver: NSObjectProtocol?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        if let profile = profileService.profile {
-            updateProfileDetails(profile: profile)
+
+        if presenter == nil {
+            presenter = ProfilePresenter()
         }
-        
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.didChangeNotification,
-            object: nil,
-            queue: .main) { [weak self] _ in
-                guard let self else { return }
-                self.updateAvatar()
-            }
-        updateAvatar()
+        presenter?.view = self
+        presenter?.viewDidLoad()
     }
     
-    deinit {
-        if let observer = profileImageServiceObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
-    }
-    
-    private func updateAvatar() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-        else { return }
+    func updateAvatar(url: URL) {
         let processor = RoundCornerImageProcessor(cornerRadius: 35)
         profileImageView.kf.indicatorType = .activity
         profileImageView.kf.setImage(
@@ -58,6 +46,12 @@ final class ProfileViewController: UIViewController {
                 print("Ошибка загрузки аватара: \(error.localizedDescription)")
             }
         }
+    }
+    
+    func updateProfileDetails(name: String, loginName: String, description: String) {
+        nameLabel.text = name
+        loginNameLabel.text = loginName
+        descriptionLabel.text = description
     }
     
     private func setupLayout() {
@@ -113,6 +107,7 @@ final class ProfileViewController: UIViewController {
             target: self,
             action: #selector(Self.didTapButton)
         )
+        exitButton.accessibilityIdentifier = "logout button"
         exitButton.tintColor = .ypRedIOS
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitButton)
@@ -122,18 +117,6 @@ final class ProfileViewController: UIViewController {
             exitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             exitButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor)
         ])
-    }
-    
-    private func updateProfileDetails(profile: Profile) {
-        nameLabel.text = profile.name.isEmpty
-            ? "Имя не указано"
-            : profile.name
-        loginNameLabel.text = profile.loginName.isEmpty
-            ? "@неизвестный_пользователь"
-            : profile.loginName
-        descriptionLabel.text = (profile.bio?.isEmpty ?? true)
-            ? "Профиль не заполнен"
-            : profile.bio
     }
     
     @objc
